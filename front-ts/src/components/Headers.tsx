@@ -147,7 +147,7 @@ const Headers = () => {
               />
             </div>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/register"}>
             <div className=" text-center py-3 px-3 rounded-full hover:bg-amber-300 ">
               <img
                 src="/header/profile-svgrepo-com.svg"

@@ -3,19 +3,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const server = import.meta.env.VITE_SERVER2;
 
-interface IUser {
-    _id: string;
+export interface IUser {
+    _id?:string
     username: string;
     email: string;
     password: string;
-    role: string;
 }
 
 interface UserState {
     currentUser: IUser| null;
     loading: boolean;
     error: string | null;
-    successMessage: string; 
 }
 
 export const createUser = createAsyncThunk<IUser, IUser>(
@@ -40,8 +38,7 @@ const userSlice = createSlice({
     initialState: {
         currentUser: null, 
         loading: false,
-        error: null,
-        successMessage: "",  
+        error: null, 
     } as UserState,
     reducers:{},
 
@@ -54,12 +51,10 @@ const userSlice = createSlice({
             .addCase(createUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.currentUser = action.payload
-                state.successMessage = "User created successfully";
             })
             .addCase(createUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "Failed to create user";
-                state.successMessage = "";
             })
     }
 })

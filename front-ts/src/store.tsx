@@ -1,5 +1,5 @@
 import productSlice from "./reduces/productSlice";
-import userSlice from "./reduces/ีuserSlice"
+import userSlice from "./reduces/userSlice"
 import { configureStore } from "@reduxjs/toolkit";
 
 
