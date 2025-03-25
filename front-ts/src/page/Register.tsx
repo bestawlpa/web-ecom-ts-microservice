@@ -31,6 +31,8 @@ const Register = () => {
         title: 'SUCCESS',
         text: 'Register Success',
         icon: 'success'
+      }).then(() => {
+        navigate('/login'); 
       });
     } catch (err) {
       Swal.fire({
@@ -112,7 +114,7 @@ const Register = () => {
                   Register
                 </button>
               )}
-              {error && <p className="error text-red-600">{error}</p>}
+              {error && <div className="error w-full text-center text-red-600 font-bold"><p>{error}</p></div>}
               
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
