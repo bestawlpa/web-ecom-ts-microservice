@@ -1,0 +1,4 @@
+.env
+/front-ts/.env
+/server/product-service/.env
+/server/user-service/.env

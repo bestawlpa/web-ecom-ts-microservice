@@ -1,0 +1,158 @@
+[
+  {
+    "product_name": "Apple iPhone 13",
+    "category": "mobile & gadgets",
+    "description": "Apple iPhone 13iPhone 13 มาพร้อมระบบกล้องคู่สุดล้ำ ชิป A15 Bionic ที่เร็วสุดขั้ว แบตเตอรี่ที่ใช้งานได้นานขึ้นแบบก้าวกระโดดครั้งใหญ่ ดีไซน์ที่ทนทาน 5G ที่เร็วสุดแรง1 และจอภาพ Super Retina XDR ที่สว่างสดใส",
+    "images": [
+      "https://down-th.img.susercontent.com/file/7945fb86f3b909b680b699a69b09e256",
+      "https://down-th.img.susercontent.com/file/5af1823ba5f7caa8d8d0a049219bfe46",
+      "https://down-th.img.susercontent.com/file/bbc803877bcf9e2e2c01d7f1a7070893"
+    ],
+    "price": 575,
+    "stock": 6,
+    "ratings": 4.9
+  },
+  {
+    "product_name": "PlayStation 5™ △○×□ Vol.02",
+    "category": "gaming & accessories",
+    "description": "เครื่องเล่นเกม PS5 Slim PlayStation 5 Slim  Ultra HD Blu-ray Edition รุ่นมีไดรฟ์อ่านแผ่น Ultra HD Blu-ray",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98s-lpzy35178aoqc3",
+      "https://down-th.img.susercontent.com/file/652b3ea45a5fce63b2a8f17c1ceb3d42",
+      "https://down-th.img.susercontent.com/file/e7cb2363b28947f036755d149d7cc821"
+    ],
+    "price": 999.7,
+    "stock": 3,
+    "ratings": 4.5
+  },
+  {
+    "product_name": "RICOH GR III Digital Camera",
+    "category": "cameras",
+    "description": "ประกัน 1 ปี มีปัญหาส่งให้ทางร้านได้เลยค่ะ เครื่องเป็นศูนย์นอกนะคะ ของเป็นพรีค่ะที่ร้านยังไม่มี stock ",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98q-lt2oq50ckkmm3c",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98y-lt2oq50d00ql53",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98r-lt2oq50ckkhp95"
+    ],
+    "price": 1140,
+    "stock": 4,
+    "ratings": 4.9
+  },
+  {
+    "product_name": "ชามอาหารสัตว์ แบบใหม่",
+    "category": "pets",
+    "description": "หมายเหตุ สินค้ามีปัญหา ได้ของไม่ครบ ผมรับผิดชอบ หมดทุกอย่าง ครับ ทักมาคุยกันครับผม",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r990-lof7ufl4dhi740",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r991-lof7ufl58dzz22",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98y-lof7ufl4dhnodf"
+    ],
+    "price": 2.6,
+    "stock": 71,
+    "ratings": 3.4
+  },
+  {
+    "product_name": "La Roche-Posay CICAPLAST BAUME B5+",
+    "category": "beauty & Personal care",
+    "description": "บาล์มบำรุงผิวช่วยปลอบประโลมและฟื้นบำรุงสภาพผิวสำหรับผิวแห้งและผิวที่มีแนวโน้มระคายเคืองง่ายเหมาะกับทุกการใช้และทุกคนในครอบครัวรวมถึงเด็กเล็ก",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134201-7r98t-ltjtzp5icvua15",
+      "https://down-th.img.susercontent.com/file/th-11134201-7r991-ltjtzp7ga1jj8d",
+      "https://down-th.img.susercontent.com/file/th-11134201-7r98r-ltjtzp58das906"
+    ],
+    "price": 15.4,
+    "stock": 19,
+    "ratings": 4.9
+  },
+  {
+    "product_name": "นาฬิกาข้อมือผู้หญิง PROJECT TWO รุ่น AOST23549 ",
+    "category": "watches & glasses",
+    "description": "ทนทานต่อการกระเด็นหรือแช่ในน้ำในระยะสั้นๆ แต่ไม่เหมาะสำหรับการใส่ว่ายน้ำหรือใส่อาบน้ำสินค้าของแท้ 100% พร้อมกล่อง",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98u-lqx3lnadxc59ba",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98v-lqx3lnadyqpp2d",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98z-lqx3lnadvxkt7a"
+    ],
+    "price": 84.77,
+    "stock": 8,
+    "ratings": 2.5
+  },
+  {
+    "product_name": "ASICS : EvoRide SPEED MEN RUNNING",
+    "category": "spots & outdoors",
+    "description": "เป็นรองเท้าเทรนนิ่งน้ำหนักเบาที่ออกแบบมาเพื่อเน้นการประหยัดพลังงานมากขึ้นการพัฒนาของรองเท้าเทรนนิ่งรุ่นนี้มุ่งเน้นไปที่การทรงตัวการม้วนตัวไปข้างหน้าอย่างนุ่มนวล และการยึดเกาะ",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r992-lp7r3fz5t5ku6c",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r991-lp7r3fz5xda6f7",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98t-lp7r3fz4u1dq90"
+    ],
+    "price": 140,
+    "stock": 4,
+    "ratings": 4.8
+  },
+  {
+    "product_name": "OATSIDE Barista Blend 1L",
+    "category": "food & beverages",
+    "description": "OATSIDE Barista Blend โอ๊ตไซด์ บาริสต้า เบลน โอ๊ต มิลค์ ขนาด 1000 มล. (1 กล่อง) หอมอร่อยครีมมี่เข้มข้นเหมาะสำหรับ ชงชา กาแฟและเบเกอร์รี่ต่างๆ",
+    "images": [
+      "https://down-th.img.susercontent.com/file/sg-11134201-22100-noiwcyjasbjvf0",
+      "https://down-th.img.susercontent.com/file/sg-11134201-22100-rzllktiasbjv01",
+      "https://down-th.img.susercontent.com/file/sg-11134201-22100-eu6v6nkasbjv79"
+    ],
+    "price": 2.8,
+    "stock": 6,
+    "ratings": 4.8
+  },
+  {
+    "product_name": "LEGO Art 31208 Hokusai – The Great Wave Building Kit",
+    "category": "baby & toys",
+    "description": "Lovers of art and classic paintings will adore this incredible LEGO® Art building set for adults. You can create a LEGO replica of one of the art world’s most iconic works Hokusai’s The Great Wave (31208)",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98q-loxt64nm0ynd57",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98s-loxt64nm7zhl49",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98y-loxt64nm6kx577"
+    ],
+    "price": 85.4,
+    "stock": 3,
+    "ratings": 4.8
+  },
+  {
+    "product_name": "VISTRA ZINC 15MG",
+    "category": "health & wellness",
+    "description": "วิตามิน Zinc (ซิงก์) แร่ธาตุสำคัญที่จำเป็นสำหรับทุกช่วงวัย ปัญหาเรื่องสุขภาพที่เกี่ยวกับผม ผิว สิว เล็บ รวมถึงภูมิคุ้มกันที่ลดลงสามารถดูแลด้วย วิตามิน Zinc (ซิงก์) แร่ธาตุสังกะสี ซึ่งเป็นแร่ธาตุตัวสำคัญที่มีความจำเป็นต่อร่างกาย",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98s-ls9jfrroh3seaa",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r98y-ls9jt1u8spria0",
+      "https://down-th.img.susercontent.com/file/th-11134207-7r990-ls9jfrroiicub4"
+    ],
+    "price": 5.57,
+    "stock": 6,
+    "ratings": 4.8
+  },
+  {
+    "product_name": "Bewell Ergonomic Desk Single Motor",
+    "category": "home & living",
+    "description": "โต๊ะปรับระดับได้เพื่อสุขภาพ มอเตอร์เดี่ยว ราคาประหยัด ทางเลือกใหม่สำหรับสุขภาพของคนวัยทำงาน ",
+    "images": [
+      "https://down-th.img.susercontent.com/file/9d2bf5ca3b819076a5e9462bbc18139c",
+      "https://down-th.img.susercontent.com/file/a5ed7ae1477808eb4dbc18552d4daa35",
+      "https://down-th.img.susercontent.com/file/22441df98cbda4cae8369a9f04d50f0d"
+    ],
+    "price": 285.6,
+    "stock": 20,
+    "ratings": 4.8
+  },
+  {
+    "product_name": "HyperX Cloud Earbuds II",
+    "category": "computers & laptops",
+    "description": "HyperX Cloud Earbuds II มีไดรเวอร์ขนาด 14 มม. ที่ปรับแต่งมาสำหรับระบบเสียงบนอุปกรณ์เคลื่อนที่ เพื่อประสบการณ์เสียงที่ยอดเยี่ยม ไม่ว่าคุณจะเล่นเกม ดูสตรีม จุกหูฟังที่ออกแบบใหม่ 4 ชุดเพื่อให้แน่ใจว่าหูฟังจะใส่ได้พอดี  Cloud Earbuds II ยังมีหัวปลั๊กแบบโลว์โปรไฟล์ งอได้ 90 องศา เพื่อไม่ให้เกะกะ เคสแบบแข็งสำหรับพกพา และไมโครโฟนในตัวสำหรับโทรศัพท์ หูฟังอเนกประสงค์เหล่านี้ใช้งานร่วมกันได้กับพีซี1, Nintendo Switch, Steam Deck™ และอุปกรณ์เคลื่อนที่2 ที่ใช้การเชื่อมต่อแบบ 3.5 มม.",
+    "images": [
+      "https://down-th.img.susercontent.com/file/th-11134207-7qul4-lhilasyh1spvf0",
+      "https://down-th.img.susercontent.com/file/th-11134207-7qukx-lh3ek301lc881a",
+      "https://down-th.img.susercontent.com/file/th-11134207-7qul9-lh3ek301pjxk91"
+    ],
+    "price": 56.86,
+    "stock": 8,
+    "ratings": 4.9
+  }
+]

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  frontend:
+    build: ./front-ts
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front-ts/src:/app/src
+      - /app/node_modules
+    command: npm run dev
+
+  product-service:
+    build: ./server/product-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=${MONGO_URI}/productdb?retryWrites=true&w=majority&appName=Cluster06
+
+  user-service:
+    build: ./server/user-service
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=${MONGO_URI}/userdb?retryWrites=true&w=majority&appName=Cluster06
+      
+    
