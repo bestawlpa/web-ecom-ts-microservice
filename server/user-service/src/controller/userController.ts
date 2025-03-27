@@ -3,6 +3,12 @@
 import * as userService from '../service/userService'
 import { Request, Response } from 'express';
 import  User,{ IUser } from '../model/userModel'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv';
+dotenv.config();
+
+const SECRET_KEY = process.env.SECRET_KEY as string;
 
 const getAllUsers = async (req:Request, res:Response) => {
     try {
@@ -78,4 +84,55 @@ const createUser = async (req: Request, res: Response) => {
     }
 };
 
-export default { getAllUsers, createUser }
+const getUserForLogin = async (req:Request ,res:Response) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        const user = await userService.getUserForLogin(email);
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' })
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid email or password' })
+        }
+
+        const token  = jwt.sign(
+            {
+                id: user._id, 
+                role: user.role 
+            }, SECRET_KEY,
+            { 
+                expiresIn: '24h' 
+            }
+        )
+
+        res.cookie('jwtToken', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000,
+        });
+
+        return res.status(200).json({
+            message: "Login Success",
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            }
+        })
+
+    } catch (error) {
+        const err = error as Error;  
+        res.status(500).json({ message: err.message || 'Error fetch user.' });
+    }
+};
+
+export default { getAllUsers, createUser, getUserForLogin }

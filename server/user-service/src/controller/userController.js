@@ -48,6 +48,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userService = __importStar(require("../service/userService"));
 const userModel_1 = __importDefault(require("../model/userModel"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const SECRET_KEY = process.env.SECRET_KEY;
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield userService.getAllUsers();
@@ -111,4 +116,44 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(500).json({ message: err.message || 'Error creating user.' });
     }
 });
-exports.default = { getAllUsers, createUser };
+const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+        const user = yield userService.getUserForLogin(email);
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+        const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
+        if (isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+        const token = jsonwebtoken_1.default.sign({
+            id: user._id,
+            role: user.role
+        }, SECRET_KEY, {
+            expiresIn: '24h'
+        });
+        res.cookie('jwtToken', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000,
+        });
+        return res.status(200).json({
+            message: "Login Success",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            }
+        });
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Error fetch user.' });
+    }
+});
+exports.default = { getAllUsers, createUser, getUserForLogin };

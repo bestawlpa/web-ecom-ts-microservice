@@ -8,4 +8,5 @@ const userController_1 = __importDefault(require("../controller/userController")
 const router = express_1.default.Router();
 router.get('/users', userController_1.default.getAllUsers);
 router.post('/register', userController_1.default.createUser);
+router.post('/login', userController_1.default.getUserForLogin);
 exports.default = router;
