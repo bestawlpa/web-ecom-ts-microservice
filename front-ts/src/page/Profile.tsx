@@ -6,15 +6,13 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   const isActive = (path:string) => {
     if (location.pathname === "/profile" && path === "account") {
       return true;
     }
     return location.pathname.includes(path);
   };
-
-
 
   return (
     <div className="w-screen h-screen flex flex-col bg-[#E5E1DA]">

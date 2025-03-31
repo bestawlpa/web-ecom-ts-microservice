@@ -104,7 +104,9 @@ const getUserForLogin = async (req:Request ,res:Response) => {
 
         const token  = jwt.sign(
             {
-                id: user._id, 
+                id: user._id,
+                username: user.username,
+                email: user.email, 
                 role: user.role 
             }, SECRET_KEY,
             { 
@@ -141,6 +143,7 @@ const getUserProfile = async (req:Request, res:Response) => {
         if (!req.user) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
+        console.log('req.user', req.user);
         const userId = req.user.id;
         const user = await userService.getUserProfile(userId);
 
