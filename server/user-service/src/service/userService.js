@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserForLogin = exports.createUser = exports.getAllUsers = void 0;
+exports.getUserProfile = exports.getUserForLogin = exports.createUser = exports.getAllUsers = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,3 +49,13 @@ const getUserForLogin = (email) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getUserForLogin = getUserForLogin;
+const getUserProfile = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield userModel_1.default.findOne({ _id: id });
+    }
+    catch (error) {
+        const err = error;
+        throw new Error('Error fetching userById: ' + err.message);
+    }
+});
+exports.getUserProfile = getUserProfile;

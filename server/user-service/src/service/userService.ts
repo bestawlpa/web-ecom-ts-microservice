@@ -34,4 +34,13 @@ const getUserForLogin = async (email: string): Promise<IUser  | null> => {
     }
 }
 
-export { getAllUsers, createUser, getUserForLogin  }
+const getUserProfile = async (id: string): Promise<IUser  | null> => {
+    try {
+        return await User.findOne({ _id: id })
+    } catch (error) {
+        const err = error as Error;  
+        throw new Error('Error fetching userById: ' + err.message);
+    }
+}
+
+export { getAllUsers, createUser, getUserForLogin, getUserProfile }

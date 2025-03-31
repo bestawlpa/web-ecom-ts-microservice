@@ -127,7 +127,7 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
-        if (isPasswordValid) {
+        if (!isPasswordValid) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         const token = jsonwebtoken_1.default.sign({
@@ -138,11 +138,13 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
         });
         res.cookie('jwtToken', token, {
             httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 24 * 60 * 60 * 1000,
         });
         return res.status(200).json({
             message: "Login Success",
+            token,
             user: {
                 id: user._id,
                 username: user.username,
@@ -156,4 +158,27 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ message: err.message || 'Error fetch user.' });
     }
 });
-exports.default = { getAllUsers, createUser, getUserForLogin };
+const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+        const userId = req.user.id;
+        const user = yield userService.getUserProfile(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const result = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+        };
+        res.status(200).json(result);
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Error fetch user.' });
+    }
+});
+exports.default = { getAllUsers, createUser, getUserForLogin, getUserProfile };
