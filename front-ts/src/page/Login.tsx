@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const [email, setEmail] = useState("test@hotmail.com");
-  const [password, setPassword] = useState("Test12");
+  const [email, setEmail] = useState<string>("test@hotmail.com");
+  const [password, setPassword] = useState<string>("Test12");
   const navigate = useNavigate();
-  const server = import.meta.env.VITE_SERVER2;
+  const server: string = import.meta.env.VITE_SERVER2;
 
 
-  const handleSubmit = async (e:React.FormEvent) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     try {

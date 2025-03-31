@@ -78,7 +78,7 @@ const Headers = () => {
           </div>
           <input
             type="text"
-            className="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white "
+            className="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 "
             placeholder="Search..."
             // value={search}
             // onChange={(e) => setSearch(e.target.value)}
@@ -147,7 +147,7 @@ const Headers = () => {
               />
             </div>
           </Link>
-          <Link to={"/register"}>
+          <Link to={"/profile"}>
             <div className=" text-center py-3 px-3 rounded-full hover:bg-amber-300 ">
               <img
                 src="/header/profile-svgrepo-com.svg"
