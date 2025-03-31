@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 px-40 dark:bg-gray-900">
+    <footer className="bg-gray-100 px-40 ">
       <div className=" w-full ">
-        <div className="px-4 py-6  dark:bg-gray-700 md:flex md:items-center md:justify-between">
-          <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
+        <div className="px-4 py-6   md:flex md:items-center md:justify-between">
+          <span className="text-sm text-gray-500  sm:text-center">
             © 2023 <a href="https://flowbite.com/">NightMarket™</a>. All Rights
             Reserved.
           </span>

@@ -35,11 +35,7 @@ const Register = () => {
         navigate('/login'); 
       });
     } catch (err) {
-      Swal.fire({
-        title: 'ERROR',
-        text: 'Registration Failed',
-        icon: 'error'
-      });
+      console.error(err);
     }
   };
 

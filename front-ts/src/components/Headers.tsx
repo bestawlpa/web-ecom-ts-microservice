@@ -1,10 +1,10 @@
-import {  useState, useRef } from "react";
+import {  useRef } from "react";
 import { Link } from "react-router-dom";
 
 
 const Headers = () => {
-  const [search, setSearch] = useState<string>("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // const [search, setSearch] = useState<string>("");
+  // const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +35,7 @@ const Headers = () => {
   // }, []);
 
   return (
-    <nav className="bg-gray-100 px-40 w-full border-gray-200 dark:bg-gray-900 sticky top-0 ">
+    <nav className="bg-gray-100 px-40 w-full border-gray-200 sticky top-0 ">
       <div className="w-full flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to={"/"}
@@ -78,9 +78,9 @@ const Headers = () => {
           </div>
           <input
             type="text"
-            className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white "
             placeholder="Search..."
-            value={search}
+            // value={search}
             // onChange={(e) => setSearch(e.target.value)}
             // onFocus={() => setIsSearchOpen(true)}
           />

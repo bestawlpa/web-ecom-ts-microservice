@@ -15,6 +15,7 @@ const Home = () => {
   }, [dispatch]);
 
 
+  
   return (
     <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
       <Headers />
@@ -25,7 +26,7 @@ const Home = () => {
             {products.map((e) => (
               <div
                 key={e._id}
-                className="w-[260px]  bg-white border rounded-[4px] border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+                className="w-[260px] bg-white border rounded-[4px]  border-gray-200 shadow "
               >
                 <Link to={`/product/${e._id}`}>
                   <img
@@ -37,7 +38,7 @@ const Home = () => {
                 <div className="px-5 pb-5">
                   <Link to={`/product/${e._id}`}>
                     <div className="flex flex-col justify-between h-14">
-                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white line-clamp-2">
+                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 line-clamp-2">
                         {e.product_name}
                       </h5>
                     </div>
@@ -95,7 +96,7 @@ const Home = () => {
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold text-gray-900 dark:text-white">
+                    <span className="text-xl font-bold text-gray-900">
                       ฿{e.price}
                     </span>
                     <button

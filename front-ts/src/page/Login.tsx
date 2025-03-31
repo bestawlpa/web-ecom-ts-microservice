@@ -1,19 +1,40 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState("test@hotmail.com");
   const [password, setPassword] = useState("Test12");
+  const navigate = useNavigate();
+  const server = import.meta.env.VITE_SERVER2;
 
 
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
-    Swal.fire({
-      title: 'SUCCESS',
-      text: 'Login Success',
-      icon: 'success'
-    })
+    
+    try {
+      const response = await fetch(`${server}api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+      if (response.ok) {
+        Swal.fire({
+          title: 'SUCCESS',
+          text: 'Login Success',
+          icon: 'success'
+        }).then(() => {
+        navigate('/'); 
+      });
+      } 
+    } catch (err) {
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Login Failed',
+          icon: 'error'
+      });
+    }
   };
 
   return (
