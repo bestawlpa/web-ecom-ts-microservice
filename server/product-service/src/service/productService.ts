@@ -6,7 +6,6 @@ const getAllProducts = async (): Promise<IProduct[]> => {
     } catch (error) {
         const err = error as Error;  
         throw new Error('Error fetching products: ' + err.message);
-        // throw new Error('Error fetching products: ' + error.message);
     }
 };
 
