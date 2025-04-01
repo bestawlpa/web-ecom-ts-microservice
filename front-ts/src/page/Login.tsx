@@ -1,45 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
-import { getUserProfile } from "../reduces/userSlice";
+import { handleSubmit } from "../controllers/LoginController";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("test@hotmail.com");
   const [password, setPassword] = useState<string>("Test12");
   const navigate = useNavigate();
-  const server: string = import.meta.env.VITE_SERVER2;
   const dispatch = useDispatch<AppDispatch>();
-
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    try {
-      const response = await fetch(`${server}api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-      });
-      if (response.ok) {
-        Swal.fire({
-          title: 'SUCCESS',
-          text: 'Login Success',
-          icon: 'success'
-        }).then(async () => {
-          await dispatch(getUserProfile());
-          navigate('/'); 
-        });
-      } 
-    } catch (err) {
-        Swal.fire({
-          title: 'ERROR',
-          text: 'Login Failed',
-          icon: 'error'
-      });
-    }
-  };
 
   return (
     <section className="bg-[#111827] dark:bg-gray-900">
@@ -49,7 +18,8 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-4 md:space-y-6" 
+              onSubmit={(e) => handleSubmit(e, email, password, dispatch, navigate)}>
               <div>
                 <label
                   htmlFor="email"
