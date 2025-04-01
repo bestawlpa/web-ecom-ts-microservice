@@ -2,10 +2,14 @@ import { useNavigate } from "react-router-dom";
 import Headers from "../components/Headers";
 import Footer from "../components/Footer";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useEffect } from "react";
 
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser} = useSelector((state: RootState) => state.user)
   
   const isActive = (path:string) => {
     if (location.pathname === "/profile" && path === "account") {
@@ -13,6 +17,16 @@ const Profile = () => {
     }
     return location.pathname.includes(path);
   };
+
+  useEffect(() => {
+      if (!currentUser) {
+        navigate('/'); 
+      }
+    }, [currentUser]);
+
+  if (!currentUser) {
+    return <div className="w-screen h-screen flex flex-col justify-center items-center bg-[#E5E1DA]">Loading...</div>; // หรือหน้าอื่นๆ ถ้าผู้ใช้ไม่ได้ล็อกอิน
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col bg-[#E5E1DA]">

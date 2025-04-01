@@ -9,7 +9,6 @@ export const handleSubmit = async (e:React.FormEvent<HTMLFormElement>, email: st
     e.preventDefault();
     
     try {
-
         const response = await fetch(`${server}api/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

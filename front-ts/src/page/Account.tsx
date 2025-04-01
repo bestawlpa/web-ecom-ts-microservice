@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store";
 import { handleLogout } from "../controllers/LogoutController";
@@ -7,28 +6,7 @@ import { handleLogout } from "../controllers/LogoutController";
 const Account = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { currentUser, loading } = useSelector((state: RootState) => state.user)
-
-  useEffect(() => {
-    if (currentUser) {
-      console.log("home", currentUser);
-    }
-  }, [currentUser]);
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await fetch(`${server}api/logout`, {
-  //       method: "POST",
-  //       credentials: "include",
-  //     })
-  //     console.log('success');
-  //     dispatch(logoutUser());
-  //   } catch (error) {
-  //     console.error("Logout failed", error);
-  //   }
-  // }
-
-  if (loading) return <p>Loading...</p>;
+  const { currentUser} = useSelector((state: RootState) => state.user)
 
   return (
     <div className=" bg-[#FFFFFF] w-full h-full p-4 rounded-lg flex flex-col justify-between">
@@ -37,9 +15,6 @@ const Account = () => {
           <h1>My Profile</h1>
         </div>
         <div className=" h-12 flex justify-start items-center">
-          {/* <h1>
-            Username <span>{currentUser.username}</span>
-          </h1> */}
           {currentUser && (
               <div>
                  <p><strong>Username:</strong> {currentUser.username}</p>
