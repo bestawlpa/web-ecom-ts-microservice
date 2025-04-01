@@ -42,6 +42,5 @@ const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextF
 
         next();
     });
-}
-
+};
 export default authenticateToken;

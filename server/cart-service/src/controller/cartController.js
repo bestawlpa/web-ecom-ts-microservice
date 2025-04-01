@@ -53,4 +53,28 @@ const getAllCarts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
 });
-exports.default = { getAllCarts };
+const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, items } = req.body;
+    if (!userId || !Array.isArray(items) || items.length === 0) {
+        res.status(400).json({ message: 'Missing required fields or items' });
+        return;
+    }
+    try {
+        let updatedCart;
+        for (const item of items) {
+            const { productId, quantity } = item;
+            if (!productId || !quantity) {
+                res.status(400).json({ message: 'Invalid item data' });
+                return;
+            }
+            updatedCart = yield cartService.createCart(userId, item);
+        }
+        console.log('updateCart', updatedCart);
+        res.status(200).json({ message: 'Items added to cart', cart: updatedCart });
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message });
+    }
+});
+exports.default = { getAllCarts, createCart };

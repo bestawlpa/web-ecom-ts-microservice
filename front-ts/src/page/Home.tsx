@@ -11,27 +11,53 @@ const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.product.products)
   const { currentUser } = useSelector((state: RootState) => state.user)
+  
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProducts()); 
   }, [dispatch]);
+    
+  const handleAddCart = async (productId: string) => {
 
-  useEffect(() => {
-    if (currentUser) {
-      console.log("home", currentUser);
-    }
-  }, [currentUser]);
-
-  const handleAddCart = () => {
     if (!currentUser) {
-      alert("กรุณา login ก่อน เพิ่มสินค้าในตะกร้า");
+      alert("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า");
       navigate("/login");
-    } else {
-      alert("success")
+      return;
+    }
+
+    const cartData = {
+      userId: currentUser._id,  // '67e4e4e1f0df251f08743a58'
+      items: [
+        {
+          productId,
+          quantity: 1,
+        },
+      ],
+    };
+
+    console.log('cartdata',cartData);
+    try {
+      const response = await fetch("http://localhost:3003/api/addCart", {
+        method: "POST", 
+        headers: { "Content-Type": "application/json" },
+        // credentials: "include", 
+        body: JSON.stringify((cartData)),
+      });
+
+      if (response.ok) {
+        alert("เพิ่มสินค้าในตะกร้าเรียบร้อยแล้ว!");
+      } else {
+        const data = await response.json();
+        console.log(data);
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("เกิดข้อผิดพลาดในการเพิ่มสินค้าในตะกร้า");
     }
   };
-  
+
   
   return (
     <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
@@ -126,7 +152,7 @@ const Home = () => {
                       //     e.stock
                       //   )
                       // }
-                      onClick={handleAddCart}
+                      onClick={() => handleAddCart(e._id)}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Add to cart
