@@ -1,30 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
+import { getUserProfile } from "../reduces/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../store";
 
 const Account = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<{ username: string; email: string } | null>(null);
-
-  const getUserProfile = async () => {
-    try {
-        const res = await fetch("http://localhost:3002/api/profile", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",  // ✅ สำคัญ: ให้ส่ง Cookies ไปด้วย
-        });
-
-        if (!res.ok) throw new Error(`Failed to fetch user profile: ${res.status}`);
-        const data = await res.json();
-        console.log("User Profile:", data);
-        setUser(data);
-    } catch (error) {
-        console.error(error);
-    }
-};
+  const dispatch = useDispatch<AppDispatch>();
+  const { currentUser, loading } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    getUserProfile()
-  },[])
+    dispatch(getUserProfile());
+  },[dispatch])
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className=" bg-[#FFFFFF] w-full h-full p-4 rounded-lg flex flex-col justify-between">
@@ -36,10 +25,10 @@ const Account = () => {
           {/* <h1>
             Username <span>{currentUser.username}</span>
           </h1> */}
-          {user && (
+          {currentUser && (
               <div>
-                <p><strong>Username:</strong> {user.username}</p>
-                <p><strong>Email:</strong> {user.email}</p>
+                 <p><strong>Username:</strong> {currentUser.username}</p>
+                    <p><strong>Email:</strong> {currentUser.email}</p>
               </div>
             ) }
         </div>

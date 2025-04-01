@@ -143,10 +143,8 @@ const getUserProfile = async (req:Request, res:Response) => {
         if (!req.user) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
-        console.log('req.user', req.user);
         const userId = req.user.id;
         const user = await userService.getUserProfile(userId);
-
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }

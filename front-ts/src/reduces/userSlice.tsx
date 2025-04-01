@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-
 const server = import.meta.env.VITE_SERVER2;
 
 export interface IUser {
     _id?:string
     username: string;
     email: string;
-    password: string;
+    password?: string;
 }
 
 interface UserState {
@@ -27,6 +25,23 @@ export const createUser = createAsyncThunk<IUser, IUser>(
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || "Registration failed");
+        }
+        const data = await response.json();
+        return data;
+    }
+);
+
+export const getUserProfile = createAsyncThunk<IUser>(
+    "user/getUserProfile",
+    async () => {
+        const response = await fetch(`${server}api/profile`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",  
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to fetch user profile");
         }
         const data = await response.json();
         return data;
@@ -55,6 +70,19 @@ const userSlice = createSlice({
             .addCase(createUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "Failed to create user";
+            })
+
+            .addCase(getUserProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            }) 
+            .addCase(getUserProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.currentUser = action.payload;
+            })
+            .addCase(getUserProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "Failed to fetch Profile"
             })
     }
 })

@@ -5,16 +5,37 @@ import { AppDispatch, RootState } from "../store";
 import Headers from "../components/Headers";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { getUserProfile } from "../reduces/userSlice";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.product.products)
+  const { currentUser } = useSelector((state: RootState) => state.user)
   
   useEffect(() => {
     dispatch(fetchProducts()); 
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getUserProfile());
+  },[dispatch])
 
+ 
+  useEffect(() => {
+    if (currentUser) {
+      console.log("home", currentUser);
+    }
+  }, [currentUser]);
+
+  const handleAddCart = () => {
+    if (!currentUser) {
+      alert("กรุณา login ก่อน เพิ่มสินค้าในตะกร้า");
+      
+    } else {
+      alert("success")
+    }
+  };
+  
   
   return (
     <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
@@ -109,6 +130,7 @@ const Home = () => {
                       //     e.stock
                       //   )
                       // }
+                      onClick={handleAddCart}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Add to cart

@@ -10,7 +10,6 @@ interface AuthenticatedRequest extends Request {
 
 const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const token = req.cookies.jwtToken;
-    console.log('token',token);
     
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -29,7 +28,7 @@ const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextF
         if (typeof decoded === 'object' && decoded !== null) {
             // ตรวจสอบว่า JwtPayload มีฟิลด์ที่จำเป็นและแปลงเป็น IUser
             const userFromToken: Partial<IUser> = {
-                id: decoded.id as string,  // สมมุติว่า 'sub' เป็น id ของผู้ใช้
+                id: decoded.id as string,  
                 username: decoded.username as string,
                 email: decoded.email as string,
                 role: decoded.role as string,
@@ -37,9 +36,6 @@ const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextF
 
             // แค่เก็บข้อมูลที่จำเป็นจาก JwtPayload ใน req.user
             req.user = userFromToken as IUser; // แปลง Partial<IUser> ไปเป็น IUser
-
-            console.log('user',userFromToken);
-            
         } else {
             return res.status(403).json({ message: "Invalid token format" });
         }
