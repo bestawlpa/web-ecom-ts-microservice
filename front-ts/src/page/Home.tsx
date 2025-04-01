@@ -5,22 +5,18 @@ import { AppDispatch, RootState } from "../store";
 import Headers from "../components/Headers";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { getUserProfile } from "../reduces/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.product.products)
   const { currentUser } = useSelector((state: RootState) => state.user)
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(fetchProducts()); 
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getUserProfile());
-  },[dispatch])
-
- 
   useEffect(() => {
     if (currentUser) {
       console.log("home", currentUser);
@@ -30,7 +26,7 @@ const Home = () => {
   const handleAddCart = () => {
     if (!currentUser) {
       alert("กรุณา login ก่อน เพิ่มสินค้าในตะกร้า");
-      
+      navigate("/login");
     } else {
       alert("success")
     }

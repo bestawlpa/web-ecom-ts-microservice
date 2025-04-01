@@ -161,7 +161,20 @@ const getUserProfile = async (req:Request, res:Response) => {
         const err = error as Error;  
         res.status(500).json({ message: err.message || 'Error fetch user.' });
     }
+};
+
+const userLogout = (req: Request, res: Response) => {
+    try {
+        res.clearCookie('jwtToken', {
+            httpOnly: true,    
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'strict'
+        });
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+         const err = error as Error;  
+        res.status(500).json({ message: err.message || 'Failed Logout.' });
+    }
 }
 
-
-export default { getAllUsers, createUser, getUserForLogin, getUserProfile }
+export default { getAllUsers, createUser, getUserForLogin, getUserProfile, userLogout }

@@ -1,17 +1,38 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { getUserProfile } from "../reduces/userSlice";
+// import { getUserProfile } from "../reduces/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store";
+import { logoutUser } from "../reduces/userSlice";
 
 const Account = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { currentUser, loading } = useSelector((state: RootState) => state.user)
+  const server: string = import.meta.env.VITE_SERVER2;
+
+  // useEffect(() => {
+  //   dispatch(getUserProfile());
+  // },[dispatch])
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  },[dispatch])
+    if (currentUser) {
+      console.log("home", currentUser);
+    }
+  }, [currentUser]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${server}api/logout`, {
+        method: "POST",
+        credentials: "include",
+      })
+      console.log('success');
+      dispatch(logoutUser());
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  }
 
   if (loading) return <p>Loading...</p>;
 
@@ -35,7 +56,7 @@ const Account = () => {
       </div>
       <div className=" w-full flex justify-center">
         <button
-          // onClick={handleLogout}
+          onClick={handleLogout}
           className=" w-16 h-10  text-white rounded flex justify-center items-center"
         >
           <img

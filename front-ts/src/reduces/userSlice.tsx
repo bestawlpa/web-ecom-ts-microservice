@@ -14,6 +14,11 @@ interface UserState {
     error: string | null;
 }
 
+const loadUserFromLocalStorage = ():IUser | null => {
+  const user = localStorage.getItem("currentUser");
+  return user ? JSON.parse(user) : null;
+};
+
 export const createUser = createAsyncThunk<IUser, IUser>(
     "users/createUser", 
     async (user: IUser) => {
@@ -44,6 +49,7 @@ export const getUserProfile = createAsyncThunk<IUser>(
             throw new Error(errorData.message || "Failed to fetch user profile");
         }
         const data = await response.json();
+        localStorage.setItem("currentUser", JSON.stringify(data));
         return data;
     }
 );
@@ -51,11 +57,16 @@ export const getUserProfile = createAsyncThunk<IUser>(
 const userSlice = createSlice({
     name:"user",
     initialState: {
-        currentUser: null, 
+        currentUser: loadUserFromLocalStorage(), 
         loading: false,
         error: null, 
     } as UserState,
-    reducers:{},
+    reducers:{
+        logoutUser: (state) => {
+            state.currentUser = null;
+            localStorage.removeItem("currentUser"); 
+        },
+    },
 
     extraReducers: (builder) => {
         builder
@@ -87,4 +98,5 @@ const userSlice = createSlice({
     }
 })
 
+export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

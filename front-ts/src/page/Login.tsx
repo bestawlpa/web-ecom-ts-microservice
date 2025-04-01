@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { getUserProfile } from "../reduces/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("test@hotmail.com");
   const [password, setPassword] = useState<string>("Test12");
   const navigate = useNavigate();
   const server: string = import.meta.env.VITE_SERVER2;
-
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,9 +27,10 @@ const Login = () => {
           title: 'SUCCESS',
           text: 'Login Success',
           icon: 'success'
-        }).then(() => {
-        navigate('/'); 
-      });
+        }).then(async () => {
+          await dispatch(getUserProfile());
+          navigate('/'); 
+        });
       } 
     } catch (err) {
         Swal.fire({

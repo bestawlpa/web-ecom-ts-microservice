@@ -132,6 +132,8 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
         const token = jsonwebtoken_1.default.sign({
             id: user._id,
+            username: user.username,
+            email: user.email,
             role: user.role
         }, SECRET_KEY, {
             expiresIn: '24h'
@@ -181,4 +183,18 @@ const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).json({ message: err.message || 'Error fetch user.' });
     }
 });
-exports.default = { getAllUsers, createUser, getUserForLogin, getUserProfile };
+const userLogout = (req, res) => {
+    try {
+        res.clearCookie('jwtToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+        res.status(200).json({ message: 'Logout successful' });
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Failed Logout.' });
+    }
+};
+exports.default = { getAllUsers, createUser, getUserForLogin, getUserProfile, userLogout };

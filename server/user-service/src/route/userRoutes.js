@@ -11,4 +11,5 @@ router.get('/users', userController_1.default.getAllUsers);
 router.post('/register', userController_1.default.createUser);
 router.post('/login', userController_1.default.getUserForLogin);
 router.get('/profile', authenticateToken_1.default, userController_1.default.getUserProfile);
+router.post('/logout', userController_1.default.userLogout);
 exports.default = router;
