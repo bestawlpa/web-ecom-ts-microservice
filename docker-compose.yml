@@ -26,5 +26,14 @@ services:
       - .env
     environment:
       - MONGO_URI=${MONGO_URI}/userdb?retryWrites=true&w=majority&appName=Cluster06
+
+  cart-service:
+    build: ./server/cart-service
+    ports:
+      - "3003:3003"
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=${MONGO_URI}/cartdb?retryWrites=true&w=majority&appName=Cluster06
       
     
