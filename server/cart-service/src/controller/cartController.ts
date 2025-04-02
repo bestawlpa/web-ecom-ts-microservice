@@ -64,7 +64,6 @@ const getCartByUserId = async (req: Request, res: Response) => {
           return res.status(404).json({ message: 'No cart found for this user' });
         }
 
-    
         const productDetails = await Promise.all(
           cartItems.items.map(async (item) => {
             const product = await getProductById(item.productId.toString());
