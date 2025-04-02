@@ -32,7 +32,6 @@ const createCart = async (req: Request, res: Response) => {
             }
             updatedCart = await cartService.createCart(userId, item);
         }
-        console.log('updateCart',updatedCart);
         
         res.status(200).json({ message: 'Items added to cart', cart: updatedCart });
     } catch (error) {
@@ -43,11 +42,11 @@ const createCart = async (req: Request, res: Response) => {
 
 const getProductById = async (productId: string) => {
     try {
-        const response = await fetch(`http://web-ecommerce-ts-microservice-product-service-1:3001/api/products/${productId}`);
+        const response = await fetch(`http://localhost:3001/api/products/${productId}`);
         if (!response.ok) {
             throw new Error('Product not found');
         }
-        const { product_name, images, price, quantity, stock  } = await response.json();
+        const { product_name, images, price, quantity, stock  } = await response.json();    
     
         return { product_name, images, price, quantity, stock  };
     } catch (error) {
@@ -83,4 +82,20 @@ const getCartByUserId = async (req: Request, res: Response) => {
     }
 };
 
-export default { getAllCarts, createCart, getCartByUserId }
+const removeItemFromCart = async (req: Request, res: Response) => {
+    const { userId, itemId } = req.params;
+
+    if (!userId || !itemId) {
+        return res.status(400).json({ message: 'Missing userId or itemId' });
+    }
+
+    try {
+        const updatedCart = await cartService.removeItemFromCart(userId, itemId);
+        res.status(200).json({ message: 'Item removed from cart', cart: updatedCart });
+    } catch (error) {
+        const err = error as Error;
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export default { getAllCarts, createCart, getCartByUserId, removeItemFromCart }

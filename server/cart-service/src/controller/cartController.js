@@ -47,7 +47,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cartService = __importStar(require("../service/cartService"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
-// const productServiceUrl = 'http://localhost:3001/api/products/'; 
 const getAllCarts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const cart = yield cartService.getAllCarts();
@@ -74,7 +73,6 @@ const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             }
             updatedCart = yield cartService.createCart(userId, item);
         }
-        console.log('updateCart', updatedCart);
         res.status(200).json({ message: 'Items added to cart', cart: updatedCart });
     }
     catch (error) {
@@ -84,7 +82,7 @@ const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const getProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, node_fetch_1.default)(`http://web-ecommerce-ts-microservice-product-service-1:3001/api/products/${productId}`);
+        const response = yield (0, node_fetch_1.default)(`http://localhost:3001/api/products/${productId}`);
         if (!response.ok) {
             throw new Error('Product not found');
         }
@@ -103,13 +101,10 @@ const getCartByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (!cartItems) {
             return res.status(404).json({ message: 'No cart found for this user' });
         }
-        // ดึงข้อมูลสินค้าแต่ละตัว
         const productDetails = yield Promise.all(cartItems.items.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-            // ดึงข้อมูลสินค้าโดยการทำ HTTP request ไปยัง product-service
             const product = yield getProductById(item.productId.toString());
-            return Object.assign(Object.assign({}, item), { product }); // รวมข้อมูลสินค้าเข้าไปในแต่ละรายการ
+            return Object.assign(Object.assign({}, item), { product });
         })));
-        // ส่งข้อมูล cart พร้อมข้อมูลสินค้า
         res.status(200).json(Object.assign(Object.assign({}, cartItems), { items: productDetails }));
     }
     catch (error) {
@@ -117,17 +112,18 @@ const getCartByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ message: err.message });
     }
 });
-// const getCartByUserId = async (req: Request, res: Response) => {
-//   try {
-//     const userId = req.params.userId;
-//     const cartItems = await cartService.getCartByUserId(userId);
-//     if (!cartItems) {
-//       return res.status(404).json({ message: 'No cart found for this user' });
-//     }
-//     res.status(200).json(cartItems);
-//   } catch (error) {
-//     const err = error as Error;
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-exports.default = { getAllCarts, createCart, getCartByUserId };
+const removeItemFromCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, itemId } = req.params;
+    if (!userId || !itemId) {
+        return res.status(400).json({ message: 'Missing userId or itemId' });
+    }
+    try {
+        const updatedCart = yield cartService.removeItemFromCart(userId, itemId);
+        res.status(200).json({ message: 'Item removed from cart', cart: updatedCart });
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message });
+    }
+});
+exports.default = { getAllCarts, createCart, getCartByUserId, removeItemFromCart };

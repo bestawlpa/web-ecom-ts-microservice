@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCartByUserId = exports.createCart = exports.getAllCarts = void 0;
+exports.removeItemFromCart = exports.getCartByUserId = exports.createCart = exports.getAllCarts = void 0;
 const cartModel_1 = __importDefault(require("../model/cartModel"));
 const mongoose_1 = require("mongoose");
 const getAllCarts = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ const createCart = (userId, item) => __awaiter(void 0, void 0, void 0, function*
             existingItem.quantity += item.quantity;
         }
         else {
-            cart.items.push({ productId: productObjectId, quantity: item.quantity });
+            cart.items.push({ _id: new mongoose_1.Types.ObjectId, productId: productObjectId, quantity: item.quantity });
         }
         return yield cart.save();
     }
@@ -60,7 +60,6 @@ const getCartByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const userObjectId = new mongoose_1.Types.ObjectId(userId);
         const cart = yield cartModel_1.default.findOne({ userId: userObjectId }).lean();
-        console.log('Cart:', cart);
         return cart;
     }
     catch (error) {
@@ -69,3 +68,22 @@ const getCartByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getCartByUserId = getCartByUserId;
+const removeItemFromCart = (userId, itemId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cart = yield cartModel_1.default.findOne({ userId });
+        if (!cart) {
+            throw new Error('Cart not found');
+        }
+        cart.items = cart.items.filter(item => item._id.toString() !== itemId);
+        if (cart.items.length === 0) {
+            yield cartModel_1.default.deleteOne({ _id: cart._id });
+            return;
+        }
+        return yield cart.save();
+    }
+    catch (error) {
+        const err = error;
+        throw new Error('Error removing item from cart: ' + err.message);
+    }
+});
+exports.removeItemFromCart = removeItemFromCart;

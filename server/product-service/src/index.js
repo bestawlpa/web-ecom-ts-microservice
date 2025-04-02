@@ -13,7 +13,7 @@ dotenv_1.default.config();
 (0, db_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:3003'],
     credentials: true,
 }));
 app.use('/api/products', productRoutes_1.default);
