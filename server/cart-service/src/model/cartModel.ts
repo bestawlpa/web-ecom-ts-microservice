@@ -6,29 +6,14 @@ interface ICart extends Document {
         productId: mongoose.Types.ObjectId;
         quantity: number;
     }[];
-    // userId: string; // เปลี่ยนจาก ObjectId เป็น string
-    // items: {
-    //   productId: string; // เปลี่ยนจาก ObjectId เป็น string
-    //   quantity: number;
-    // }[];
 }
-
-// const cartSchema = new Schema<ICart>({
-//   userId: { type: String, required: true },
-//   items: [
-//     {
-//       productId: { type: String, required: true },
-//       quantity: { type: Number, default: 1 },
-//     },
-//   ],
-// }, { timestamps: true });
 
 const cartSchema = new Schema<ICart>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },  // ใช้ mongoose.Schema.Types.ObjectId
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },  
     items: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },  // ใช้ mongoose.Schema.Types.ObjectId
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },  
         quantity: { type: Number, default: 1 },
       },
     ],

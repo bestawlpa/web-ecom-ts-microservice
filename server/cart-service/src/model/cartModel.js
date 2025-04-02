@@ -34,20 +34,11 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// const cartSchema = new Schema<ICart>({
-//   userId: { type: String, required: true },
-//   items: [
-//     {
-//       productId: { type: String, required: true },
-//       quantity: { type: Number, default: 1 },
-//     },
-//   ],
-// }, { timestamps: true });
 const cartSchema = new mongoose_1.Schema({
-    userId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User', required: true }, // ใช้ mongoose.Schema.Types.ObjectId
+    userId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [
         {
-            productId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Product', required: true }, // ใช้ mongoose.Schema.Types.ObjectId
+            productId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Product', required: true },
             quantity: { type: Number, default: 1 },
         },
     ],

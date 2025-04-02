@@ -9,4 +9,5 @@ const cartController_1 = __importDefault(require("../controller/cartController")
 const router = express_1.default.Router();
 router.get('/carts', cartController_1.default.getAllCarts);
 router.post('/addCart', cartController_1.default.createCart);
+router.get('/cart/:userId', cartController_1.default.getCartByUserId);
 exports.default = router;

@@ -28,7 +28,7 @@ const Home = () => {
     }
 
     const cartData = {
-      userId: currentUser._id,  // '67e4e4e1f0df251f08743a58'
+      userId: currentUser._id,  
       items: [
         {
           productId,
@@ -42,7 +42,6 @@ const Home = () => {
       const response = await fetch("http://localhost:3003/api/addCart", {
         method: "POST", 
         headers: { "Content-Type": "application/json" },
-        // credentials: "include", 
         body: JSON.stringify((cartData)),
       });
 

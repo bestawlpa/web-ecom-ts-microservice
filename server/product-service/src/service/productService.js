@@ -19,7 +19,8 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
         return yield productModel_1.default.find().select('_id product_name images price ratings stock');
     }
     catch (error) {
-        throw new Error('Error fetching products: ' + error.message);
+        const err = error;
+        throw new Error('Error fetching products: ' + err.message);
     }
 });
 exports.getAllProducts = getAllProducts;

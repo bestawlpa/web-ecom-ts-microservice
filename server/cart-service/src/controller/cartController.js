@@ -41,8 +41,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const cartService = __importStar(require("../service/cartService"));
+const node_fetch_1 = __importDefault(require("node-fetch"));
+// const productServiceUrl = 'http://localhost:3001/api/products/'; 
 const getAllCarts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const cart = yield cartService.getAllCarts();
@@ -77,4 +82,52 @@ const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(500).json({ message: err.message });
     }
 });
-exports.default = { getAllCarts, createCart };
+const getProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, node_fetch_1.default)(`http://web-ecommerce-ts-microservice-product-service-1:3001/api/products/${productId}`);
+        if (!response.ok) {
+            throw new Error('Product not found');
+        }
+        const { product_name, images, price, quantity, stock } = yield response.json();
+        return { product_name, images, price, quantity, stock };
+    }
+    catch (error) {
+        const err = error;
+        console.log(err);
+    }
+});
+const getCartByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const cartItems = yield cartService.getCartByUserId(userId);
+        if (!cartItems) {
+            return res.status(404).json({ message: 'No cart found for this user' });
+        }
+        // ดึงข้อมูลสินค้าแต่ละตัว
+        const productDetails = yield Promise.all(cartItems.items.map((item) => __awaiter(void 0, void 0, void 0, function* () {
+            // ดึงข้อมูลสินค้าโดยการทำ HTTP request ไปยัง product-service
+            const product = yield getProductById(item.productId.toString());
+            return Object.assign(Object.assign({}, item), { product }); // รวมข้อมูลสินค้าเข้าไปในแต่ละรายการ
+        })));
+        // ส่งข้อมูล cart พร้อมข้อมูลสินค้า
+        res.status(200).json(Object.assign(Object.assign({}, cartItems), { items: productDetails }));
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message });
+    }
+});
+// const getCartByUserId = async (req: Request, res: Response) => {
+//   try {
+//     const userId = req.params.userId;
+//     const cartItems = await cartService.getCartByUserId(userId);
+//     if (!cartItems) {
+//       return res.status(404).json({ message: 'No cart found for this user' });
+//     }
+//     res.status(200).json(cartItems);
+//   } catch (error) {
+//     const err = error as Error;
+//     res.status(500).json({ message: err.message });
+//   }
+// };
+exports.default = { getAllCarts, createCart, getCartByUserId };
