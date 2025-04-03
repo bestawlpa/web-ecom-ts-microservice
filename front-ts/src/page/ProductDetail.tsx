@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductById } from "../reduces/productSlice";
 import { AppDispatch, RootState } from "../store";
-import Headers from "../components/Headers";
+import Headers from "../components/Header";
 import Footer from "../components/Footer";
 
 const ProductDetail = () => {

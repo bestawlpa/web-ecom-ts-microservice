@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../reduces/productSlice";
 import { AppDispatch, RootState } from "../store";
-import Headers from "../components/Headers";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,7 @@ const Home = () => {
   
   return (
     <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
-      <Headers />
+      <Header />
       <main className=" flex-grow overflow-y-auto flex justify-center px-40  bg-[#E5E1DA]">
         
       <div className="  my-10 ">
