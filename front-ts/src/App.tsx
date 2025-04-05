@@ -11,6 +11,7 @@ import Toship from "./page/ToShip";
 import ToReceive from "./page/ToReceive";
 import ToCompleted from "./page/ToCompleted";
 import ToCancle from "./page/ToCancle";
+import Cart from "./page/Cart";
 
 function App() {
   const routes = [
@@ -18,6 +19,7 @@ function App() {
     {path: "/product/:id", element: <ProductDetail/>},
     {path: "/register", element: <Register />},
     {path: "/login", element: <Login />},
+    {path: "/cart", element: <Cart />},
     {path: "/profile", element: <Profile />,
       children: [
         { index: true, element: <Account /> },

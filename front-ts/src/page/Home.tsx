@@ -58,17 +58,18 @@ const Home = () => {
       <main className=" flex-grow overflow-y-auto flex justify-center px-40  bg-[#E5E1DA]">
         
       <div className="  my-10 ">
-          <div className=" grid grid-cols-4  pb-10 gap-x-8 gap-y-6">
+          <div className=" grid grid-cols-4  pb-10 gap-x-8 gap-y-6" role="list">
             {products.map((e) => (
               <div
                 key={e._id}
                 className="w-[260px] bg-white border rounded-[4px]  border-gray-200 shadow "
+                role="article"
               >
                 <Link to={`/product/${e._id}`}>
                   <img
                     className="p-8 rounded-t-lg"
                     src={Array.isArray(e.images) ? e.images[0] : e.images}
-                    alt="product image"
+                    alt={e.product_name}
                   />
                 </Link>
                 <div className="px-5 pb-5">
