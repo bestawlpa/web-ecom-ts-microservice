@@ -46,7 +46,6 @@ const mockFetchFail = () => {
     } as unknown as Response)
 }
 
-
 describe('Redux - Product Slice', () => {
     it('should fetch and store product data successfully', async () => {
         mockFetchSuccess()
@@ -75,6 +74,7 @@ describe('Redux - Product Slice', () => {
 describe('Home UI', () => {
     beforeEach(() => {
         mockFetchSuccess()
+    
         const store = configureStore({
             reducer: { 
                 product: productSlice, 
@@ -110,6 +110,16 @@ describe('Home UI', () => {
             expect(screen.getByText('4.8')).toBeInTheDocument()
         })
     })
+
+    it('should alert when adding to cart without login', async () => {
+        window.alert = vi.fn()
+        await waitFor(() => {
+            expect(screen.getByText('Test Product 1')).toBeInTheDocument()
+        })
+        const button = screen.getAllByRole('button')[0]
+        button.click()
+        await waitFor(() => {
+            expect(window.alert).toHaveBeenCalledWith("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า")
+        })
+    })
 })
-
-
