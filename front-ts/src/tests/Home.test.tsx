@@ -6,6 +6,7 @@ import productSlice,{ fetchProducts } from "../reduces/productSlice";
 import userSlice from "../reduces/userSlice"
 import { configureStore } from '@reduxjs/toolkit';
 import Home from "../page/Home";
+import Swal from "sweetalert2";
 
 const mockProduct = [
     { 
@@ -112,14 +113,27 @@ describe('Home UI', () => {
     })
 
     it('should alert when adding to cart without login', async () => {
-        window.alert = vi.fn()
+         vi.spyOn(Swal, 'fire').mockResolvedValue(
+            {
+                isConfirmed: false,
+                isDenied: false,    
+                isDismissed: false 
+            }
+        );
+
         await waitFor(() => {
-            expect(screen.getByText('Test Product 1')).toBeInTheDocument()
-        })
-        const button = screen.getAllByRole('button')[0]
-        button.click()
+            expect(screen.getByText('Test Product 1')).toBeInTheDocument();
+        });
+        
+        const button = screen.getAllByRole('button')[0];
+        button.click();
+
         await waitFor(() => {
-            expect(window.alert).toHaveBeenCalledWith("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า")
-        })
+            expect(Swal.fire).toHaveBeenCalledWith({
+                title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
+                text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
+                icon: 'error',
+            });
+        });
     })
 })

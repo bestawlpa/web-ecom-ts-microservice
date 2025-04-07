@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,9 +21,17 @@ const Home = () => {
     
   const handleAddToCart = async (productId: string) => {
     if (!currentUser) {
-      alert("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า");
-      navigate("/login");
-      return;
+      // alert("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า");
+      // navigate("/login");
+      // return;
+        Swal.fire({
+            title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
+            text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
+            icon: 'error',
+        }).then(() => {
+            navigate('/login'); 
+        });
+        return;
     }
 
     try {

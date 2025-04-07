@@ -138,7 +138,7 @@ const Headers = () => {
               />
             </div>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/cart"}>
             <div className=" text-center py-3 px-3 rounded-full hover:bg-amber-300 ">
               <img
                 src="/header/cart-svgrepo-com (1).svg"
