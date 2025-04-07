@@ -1,4 +1,4 @@
-import Product from '../../src/model/productModel';
+import Product,{ IProduct } from '../../src/model/productModel';
 import * as productService from '../../src/service/productService'
 
 
@@ -25,4 +25,42 @@ describe('Product Service', () => {
         const result = await productService.getAllProducts();
         expect(result).toEqual(mockProducts);
     });
+
+    it('should create product', async () => {
+        const mockProduct= { 
+            _id: 'newId',
+            product_name: 'New Product',
+            category: 'category-01',
+            description: 'product-01',
+            images: ['new_image.jpg'],
+            price: 150,
+            stock: 10,
+            ratings: 4.5
+        } as IProduct;
+
+        //@ts-ignore
+        Product.insertMany.mockResolvedValue([mockProduct]);
+        const result = await productService.createProduct(mockProduct);
+        expect(result).toEqual([mockProduct]);
+        expect(Product.insertMany).toHaveBeenCalledWith(mockProduct)
+    })
+
+    it('should return product by ID', async() => {
+        const mockProduct = { 
+            _id: '1',
+            product_name: 'New Product',
+            category: 'category-01',
+            description: 'product-01',
+            images: ['new_image.jpg'],
+            price: 150,
+            stock: 10,
+            ratings: 4.5
+        }
+
+        // @ts-ignore
+        Product.findById.mockResolvedValue(mockProduct);
+        const result = await productService.getProductById('1');
+        expect(result).toEqual(mockProduct)
+    })
 });
+
