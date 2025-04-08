@@ -30,12 +30,20 @@ type CartProductItem = {
     quantity: number;
 };
 
+interface SelectedItem {
+  itemId: string;
+  productId: string;
+  quantity: number;
+  product: Product;
+}
+
 const Cart = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const server: string = import.meta.env.VITE_SERVER3;
     const [item, setItem] = useState<CartItem | null>(null);
+	const [selectItems, setSelecItems] = useState<SelectedItem[]>([]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -53,8 +61,6 @@ const Cart = () => {
                   throw new Error("Failed to fetch carts");
                 }
                 const data = await response.json();
-                console.log('data',data);
-                
                 setItem(data);
                 setLoading(false);
             } catch (error) {
@@ -78,9 +84,6 @@ const Cart = () => {
 			if (!response.ok) {
 				throw new Error("ไม่สามารถลบรายการจากตะกร้าได้");
 			}
-
-			const result = await response.json();
-			console.log("result", result);
 	
 			const updatedItems = item?.items?.filter((e) => e._id !== itemId) ?? [];
 			setItem({
@@ -110,6 +113,22 @@ const Cart = () => {
         setItem({ ...item, items: updatedItems });
     };
 
+	const handleCheckboxChange = (itemId: string, productId: string, quantity: number, product: Product, isChecked: boolean) => {
+		if (isChecked) {
+			setSelecItems((e) => {
+				const updatedItems = [...e, { itemId, productId, quantity, product }];
+				console.log(updatedItems);
+				return updatedItems;
+			});
+		} else {
+			setSelecItems((e) => {
+				const updatedItems = e.filter((item) => item.itemId !== itemId);
+				console.log(updatedItems);
+				return updatedItems;
+			});
+		}
+	};
+
     return (
         <div className="w-screen h-screen flex flex-col bg-[#E5E1DA]">
             <Headers />
@@ -134,12 +153,9 @@ const Cart = () => {
 											<div key={e._id} className="cart-item border-b-2 border-b-gray-400 py-6 flex">
 												<div className="flex items-center w-[30px] ml-4">
 													<input
-													type="checkbox"
-													className="w-4 h-4 accent-green-500 cursor-pointer"
-													id={`checkbox-${item._id}`}
-													//   onChange={(e) =>
-													//     handleCheckbox(item, e.target.checked)
-													//   }
+														type="checkbox"
+														className="w-4 h-4 accent-green-500 cursor-pointer"
+														onChange={(event) => handleCheckboxChange(e._id, e.productId, e.quantity, e.product, event.target.checked)}
 													/>
 												</div>
 
@@ -227,14 +243,14 @@ const Cart = () => {
 								)}
 							</div>
                         )}
-                      
-                      </div>
-                      <div className="min-h-[50px] mt-4 w-full flex justify-center items-start">
-                          <button className="px-4 py-2 bg-red-700 rounded-lg text-white relative">
-                              Check Out
-                          </button>
-                      </div>
-                  </div>
+                    </div>
+
+                    <div className="min-h-[50px] mt-4 w-full flex justify-center items-start">
+						<button className="px-4 py-2 bg-red-700 rounded-lg text-white relative">
+							Check Out
+						</button>
+					</div>
+				</div>
             </main>
             <Footer />
         </div>
