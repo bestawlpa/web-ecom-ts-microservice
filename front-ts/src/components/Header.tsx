@@ -1,38 +1,49 @@
-import {  useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../reduces/productSlice";
+import { AppDispatch, RootState } from "../store";
+
 
 
 const Headers = () => {
-  // const [search, setSearch] = useState<string>("");
-  // const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [search, setSearch] = useState<string>("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const products = useSelector((state: RootState) => state.product.products)
 
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, [dispatch]);
+  useEffect(() => {
+  
+    if (products.length === 0) {
+        dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
 
-  // const filteredProducts = products.filter((product) =>
-  //   product.product_name.toLowerCase().includes(search.toLowerCase())
-  // );
+ 
 
-  // const handleClearSearch = () => {
-  //   setSearch(""); // เคลียร์ค่าค้นหา
-  // };
+  const filteredProducts = products.filter((product) =>
+      product.product_name.toLowerCase().includes(search.toLowerCase())
+  );
 
-  // const handleOutsideClick = (e) => {
-  //   if (searchRef.current && !searchRef.current.contains(e.target)) {
-  //     setIsSearchOpen(false); // ปิดช่องค้นหาเมื่อคลิกข้างนอก
-  //   }
-  // };
+  const handleClearSearch = () => {
+    setSearch(""); // เคลียร์ค่าค้นหา
+  };
 
-  // useEffect(() => {
-  //   // เพิ่ม event listener เพื่อจับการคลิกที่ภายนอก
-  //   document.addEventListener("mousedown", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick); // ลบ event listener เมื่อ unmount
-  //   };
-  // }, []);
+  const handleOutsideClick = (e: MouseEvent) => {
+      if (searchRef.current && e.target instanceof Node && !searchRef.current.contains(e.target)) {
+        setIsSearchOpen(false); // ปิดช่องค้นหาเมื่อคลิกข้างนอก
+      }
+  };
+
+  useEffect(() => {
+    
+      document.addEventListener("mousedown", handleOutsideClick);
+      return () => {
+          document.removeEventListener("mousedown", handleOutsideClick); 
+      };
+  }, []);
 
   return (
     <nav className="bg-gray-100 px-40 w-full border-gray-200 sticky top-0 "  role="banner">
@@ -78,13 +89,13 @@ const Headers = () => {
           </div>
           <input
             type="text"
-            className="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 "
+            className="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-[#ffffff] focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 "
             placeholder="Search..."
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
-            // onFocus={() => setIsSearchOpen(true)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onFocus={() => setIsSearchOpen(true)}
           />
-          {/* {search && (
+          {search && (
             <button
               onClick={handleClearSearch}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
@@ -125,7 +136,7 @@ const Headers = () => {
                 <div className="px-4 py-2 text-red-700">No products found</div>
               )}
             </div>
-          )} */}
+          )}
         </div>
 
         <div className=" flex justify-around py-4 w-[300px] ">

@@ -58,17 +58,23 @@ const ProductDetail = () => {
         <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
             <Headers />
                 <main className=" flex-grow overflow-y-auto flex justify-center px-40  w-full bg-[#E5E1DA]">
-                    <div className=" my-6 w-[780px] h-[515px] p-4 flex justify-between items-center mx-40 bg-white rounded-xl">
+                    <div className=" my-6 w-[780px] h-[510px] p-4 flex justify-between items-center mx-40 bg-white rounded-xl">
                         <div
                           id="gally"
                           className=" grid gap-4 justify-items-start w-[400px] h-full "
                         >
                             <div className="flex justify-center items-center h-full">
-                                <img
-                                  className=" h-[292px] w-[370px] rounded-lg object-cover shadow-md"
-                                  src={mainImage}
-                                  alt="Main"
-                                />
+                                {mainImage ? (
+                                    <img
+                                        className="h-[287px] w-[370px] rounded-lg object-cover shadow-md"
+                                        src={mainImage}
+                                        alt="Main"
+                                    />
+                                ) : (
+                                    <div className="h-[287px] w-[370px] bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+                                        No Image
+                                    </div>
+                                )}
                             </div>
 
                             <div className="flex justify-center h-full">
