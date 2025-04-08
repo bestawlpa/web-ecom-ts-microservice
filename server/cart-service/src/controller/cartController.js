@@ -82,7 +82,7 @@ const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const getProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, node_fetch_1.default)(`http://localhost:3001/api/products/${productId}`);
+        const response = yield (0, node_fetch_1.default)(`http://product-service:3001/api/products/${productId}`);
         if (!response.ok) {
             throw new Error('Product not found');
         }
@@ -112,6 +112,41 @@ const getCartByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ message: err.message });
     }
 });
+// const getProductById = async (productId: string) => {
+//     try {
+//         const response = await fetch(`http://product-service:3001/api/products/${productId}`);
+//         if (!response.ok) throw new Error('Product not found');
+//         return await response.json();
+//     } catch (error) {
+//         console.error(error);
+//         return null; // ส่งคืน null หากเกิดข้อผิดพลาด
+//     }
+// };
+// const getCartByUserId = async (req: Request, res: Response) => {
+//     try {
+//         const userId = req.params.userId;
+//         const cartItems = await cartService.getCartByUserId(userId);
+//         if (!cartItems) {
+//             return res.status(404).json({ message: 'No cart found for this user' });
+//         }
+//         // ดึงข้อมูลสินค้าทั้งหมดในครั้งเดียว
+//         const productDetails = await Promise.all(
+//             cartItems.items.map(async (item) => {
+//                 const product = await getProductById(item.productId.toString());
+//                 return product ? { ...item, product } : null; // ส่งคืนข้อมูลสินค้า
+//             })
+//         );
+//         // กรอง null ออกจาก productDetails
+//         const filteredProductDetails = productDetails.filter(item => item !== null);
+//         res.status(200).json({
+//             ...cartItems,
+//             items: filteredProductDetails,
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
 const removeItemFromCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, itemId } = req.params;
     if (!userId || !itemId) {

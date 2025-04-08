@@ -21,9 +21,6 @@ const Home = () => {
     
   const handleAddToCart = async (productId: string) => {
     if (!currentUser) {
-      // alert("กรุณา login ก่อนเพิ่มสินค้าในตะกร้า");
-      // navigate("/login");
-      // return;
         Swal.fire({
             title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
             text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
@@ -50,7 +47,12 @@ const Home = () => {
       });
 
       if (response.ok) {
-        alert("เพิ่มสินค้าในตะกร้าเรียบร้อยแล้ว!");
+         Swal.fire({
+            title: 'สินค้าถูกเพิ่มลงในตะกร้าแล้ว!',
+            icon: 'success',
+            timer: 800, 
+            showConfirmButton: false,
+          });
       } else {
         return await response.json();
       }
