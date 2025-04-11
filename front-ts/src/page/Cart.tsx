@@ -6,36 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-
-interface Product {
-    product_name: string;
-    images: string[];
-    price: number;
-    stock: number;
-}
-
-interface CartItem {
-    _id: string;
-    userId: string;
-    items: {
-        _id: string;
-        productId: string;
-        product: Product;
-        quantity: number;
-    }[];
-}
+import { Product, CartItem ,SelectedItem } from "../interfaces/cartModel";
 
 type CartProductItem = {
     product: Product;
     quantity: number;
 };
-
-interface SelectedItem {
-  itemId: string;
-  productId: string;
-  quantity: number;
-  product: Product;
-}
 
 const Cart = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
@@ -135,11 +111,20 @@ const Cart = () => {
 			});
 		}
 
+
+		const itemsToCheckout = selectItems.map((selected) => {
+			const matchedItem = item?.items.find((i) => i._id === selected.itemId);
+			return {
+				...selected,
+				quantity: matchedItem?.quantity || 1,
+			};
+		});
+
 		navigate("/checkout", {
 			state: {
-				selectItems: selectItems
+				selectItems: itemsToCheckout
 			}
-		})
+		});
 	}
 
     return (

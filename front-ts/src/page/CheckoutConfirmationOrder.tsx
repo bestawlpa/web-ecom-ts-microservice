@@ -5,27 +5,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { ChangeEvent } from "react";
+import { SelectedItem } from "../interfaces/cartModel";
 
-interface Product {
-  product_name: string;
-  images: string[];
-  price: number;
-  stock: number;
-}
 
-interface Item {
-  itemId: string;
-  productId: string;
-  product: Product;
-  quantity: number;
-}
 
 const CheckoutConfirmationOrder = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { selectItems }: { selectItems: Item[] } = state;
-  console.log(selectItems);
-  
+  const { selectItems }: { selectItems: SelectedItem[] } = state;
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState({
     firstName: "First",
