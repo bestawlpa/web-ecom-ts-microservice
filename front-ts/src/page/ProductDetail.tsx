@@ -5,6 +5,9 @@ import { fetchProductById } from "../reduces/productSlice";
 import { AppDispatch, RootState } from "../store";
 import Headers from "../components/Header";
 import Footer from "../components/Footer";
+import Swal from "sweetalert2";
+import { addToCart } from "../controllers/AddCartController";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetail = () => {
     const { id } = useParams<string>();
@@ -14,6 +17,9 @@ const ProductDetail = () => {
     const [thumbnails, setThumbnails] = useState<string | string[]>([]);
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [openBuy, setOpenBuy] = useState<boolean>(false);
+    const { currentUser } = useSelector((state: RootState) => state.user);
+    const server: string = import.meta.env.VITE_SERVER3;
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id) {
@@ -42,8 +48,18 @@ const ProductDetail = () => {
         setIsExpanded(!isExpanded);
     };
     
-    const handleButtonOpen = () => {
-        setOpenBuy(!openBuy);
+    const handleOpenBuy = () => {
+        if (!currentUser || !currentUser._id) {
+            Swal.fire({
+                title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
+                text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
+                icon: 'error',
+            }).then(() => {
+                navigate('/login'); 
+            });
+        } else {
+            setOpenBuy(!openBuy);
+        }
     };
 
     if (loading) {
@@ -53,6 +69,36 @@ const ProductDetail = () => {
             </div>
         );
     }
+
+    const handleAddToCart = async (productId: string) => {
+
+        if (!currentUser || !currentUser._id) {
+            Swal.fire({
+                title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
+                text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
+                icon: 'error',
+            }).then(() => {
+                navigate('/login'); 
+            });
+            return;
+        }
+    
+        try {
+          const response = await addToCart(server,  currentUser._id, productId)
+            if (response.ok) {
+                    Swal.fire({
+                        title: 'สินค้าถูกเพิ่มลงในตะกร้าแล้ว!',
+                        icon: 'success',
+                        timer: 800, 
+                        showConfirmButton: false,
+                    });
+            } else {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        }
+    };
 
     return(
         <div className="w-screen h-screen flex flex-col bg-[#FFFFFF]">
@@ -143,21 +189,13 @@ const ProductDetail = () => {
                                         {!openBuy ? (
                                             <div className=" mt-4 mb-3 w-full h-[80px] flex flex-col justify-between items-center">
                                                 <button
-                                                  // onClick={() =>
-                                                  //   handleAddCart(
-                                                  //     currentProduct._id,
-                                                  //     currentProduct.product_name,
-                                                  //     currentProduct.price,
-                                                  //     currentProduct.images[0],
-                                                  //     currentProduct.stock
-                                                  //   )
-                                                  // }
-                                                  className=" w-[200px] h-[35px] bg-blue-500 font-extrabold text-xl text-white rounded-md "
+                                                    onClick={() => handleAddToCart(currentProduct._id)}
+                                                    className=" w-[200px] h-[35px] bg-blue-500 font-extrabold text-xl text-white rounded-md "
                                                 >
                                                     Add to Cart
                                                 </button>
                                                 <button
-                                                    onClick={handleButtonOpen}
+                                                    onClick={handleOpenBuy}
                                                     className=" w-[200px] h-[35px]  bg-green-500 font-extrabold text-xl text-white rounded-md"
                                                 >
                                                     Buy Now
@@ -172,7 +210,7 @@ const ProductDetail = () => {
                                                         </h1>
                                                     </div>
                                                     <button
-                                                        onClick={handleButtonOpen}
+                                                        onClick={handleOpenBuy}
                                                         className="  w-[30px] h-[30px] flex items-center justify-center bg-white text-white rounded-full"
                                                     >
                                                         <img
@@ -195,7 +233,7 @@ const ProductDetail = () => {
                                                         />
                                                     </button>
                                                     <div className=" mx-4 w-12 h-8  flex justify-center items-center rounded text-3xl  font-semibold">
-                                                        {/* <h1>{quantityForBuy}</h1> */}
+                                                        <h1>1</h1>
                                                     </div>
                                                     <button
                                                     //   onClick={() => handleQuantityChange("increment")}

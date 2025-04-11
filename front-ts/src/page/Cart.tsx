@@ -13,7 +13,6 @@ interface Product {
     stock: number;
 }
 
-
 interface CartItem {
     _id: string;
     userId: string;

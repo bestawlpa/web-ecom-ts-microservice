@@ -94,6 +94,9 @@ const userSlice = createSlice({
             .addCase(getUserProfile.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "Failed to fetch Profile"
+
+                state.currentUser = null;
+                localStorage.removeItem("currentUser");
             })
     }
 })

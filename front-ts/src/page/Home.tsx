@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { addToCart } from "../controllers/AddCartController";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +21,7 @@ const Home = () => {
   }, [dispatch]);
     
   const handleAddToCart = async (productId: string) => {
-    if (!currentUser) {
+    if (!currentUser || !currentUser._id) {
         Swal.fire({
             title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
             text: 'กรุณาล็อกอินเพื่อดำเนินการต่อ',
@@ -32,20 +33,7 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`${server}api/addCart`, {
-        method: "POST", 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: currentUser._id,  
-          items: [
-            {
-              productId,
-              quantity: 1,
-            },
-          ],
-        }),
-      });
-
+      const response = await addToCart(server,  currentUser._id, productId)
       if (response.ok) {
          Swal.fire({
             title: 'สินค้าถูกเพิ่มลงในตะกร้าแล้ว!',

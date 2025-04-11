@@ -1,4 +1,9 @@
 import { useRoutes } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store"; 
+import { getUserProfile } from "./reduces/userSlice";
+import { useEffect } from "react";
+
 import Home from "./page/Home"
 import ProductDetail from "./page/ProductDetail";
 import Register from "./page/Register";
@@ -14,6 +19,12 @@ import ToCancle from "./page/ToCancle";
 import Cart from "./page/Cart";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getUserProfile()); 
+  }, [dispatch]);
+
   const routes = [
     {path: "/", element: <Home/>},
     {path: "/product/:id", element: <ProductDetail/>},
