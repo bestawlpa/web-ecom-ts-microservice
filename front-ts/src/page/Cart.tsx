@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import Headers from "../components/Header";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface Product {
     product_name: string;
@@ -116,21 +117,34 @@ const Cart = () => {
 		if (isChecked) {
 			setSelecItems((e) => {
 				const updatedItems = [...e, { itemId, productId, quantity, product }];
-				console.log(updatedItems);
 				return updatedItems;
 			});
 		} else {
 			setSelecItems((e) => {
 				const updatedItems = e.filter((item) => item.itemId !== itemId);
-				console.log(updatedItems);
 				return updatedItems;
 			});
 		}
 	};
 
+	const handleChackout = () => {
+		if (selectItems.length == 0) {
+			Swal.fire({
+				title: 'กรุณาเลือกสินค้าที่ต้องการก่อนทำการเช็คเอาท์',
+				icon: 'error',
+			});
+		}
+
+		navigate("/checkout", {
+			state: {
+				selectItems: selectItems
+			}
+		})
+	}
+
     return (
         <div className="w-screen h-screen flex flex-col bg-[#E5E1DA]">
-            <Headers />
+            <Header />
             <main className="flex-grow overflow-auto w-full h-full flex justify-center px-40">
                 <div className="w-[850px] min-h-[520px] flex flex-col justify-between items-center py-4">
                       <h1 className="text-xl font-semibold mb-5 text-[#4A4747]">
@@ -245,7 +259,9 @@ const Cart = () => {
                     </div>
 
                     <div className="min-h-[50px] mt-4 w-full flex justify-center items-start">
-						<button className="px-4 py-2 bg-red-700 rounded-lg text-white relative">
+						<button className="px-4 py-2 bg-red-700 rounded-lg text-white relative"
+							onClick={handleChackout}
+						>
 							Check Out
 						</button>
 					</div>

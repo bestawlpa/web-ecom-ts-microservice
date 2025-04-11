@@ -61,7 +61,7 @@ const getCartByUserId = async (req: Request, res: Response) => {
         const cartItems = await cartService.getCartByUserId(userId);
 
         if (!cartItems) {
-          return res.status(404).json({ message: 'No cart found for this user' });
+          return res.status(404).json({ message: 'No itme in cart' });
         }
 
         const productDetails = await Promise.all(

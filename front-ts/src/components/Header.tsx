@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from "../store";
 
 
 
-const Headers = () => {
+const Header = () => {
   const [search, setSearch] = useState<string>("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -173,4 +173,4 @@ const Headers = () => {
   );
 };
 
-export default Headers;
+export default Header;

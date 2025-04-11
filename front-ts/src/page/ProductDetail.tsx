@@ -71,7 +71,6 @@ const ProductDetail = () => {
     }
 
     const handleAddToCart = async (productId: string) => {
-
         if (!currentUser || !currentUser._id) {
             Swal.fire({
                 title: 'กรุณาล็อกอินก่อนเพิ่มสินค้าในตะกร้า',
@@ -82,7 +81,6 @@ const ProductDetail = () => {
             });
             return;
         }
-    
         try {
           const response = await addToCart(server,  currentUser._id, productId)
             if (response.ok) {

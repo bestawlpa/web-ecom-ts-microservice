@@ -99,7 +99,7 @@ const getCartByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function
         const userId = req.params.userId;
         const cartItems = yield cartService.getCartByUserId(userId);
         if (!cartItems) {
-            return res.status(404).json({ message: 'No cart found for this user' });
+            return res.status(404).json({ message: 'No itme in cart' });
         }
         const productDetails = yield Promise.all(cartItems.items.map((item) => __awaiter(void 0, void 0, void 0, function* () {
             const product = yield getProductById(item.productId.toString());

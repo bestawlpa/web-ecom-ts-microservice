@@ -17,6 +17,7 @@ import ToReceive from "./page/ToReceive";
 import ToCompleted from "./page/ToCompleted";
 import ToCancle from "./page/ToCancle";
 import Cart from "./page/Cart";
+import CheckoutConfirmationOrder from "./page/CheckoutConfirmationOrder";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,6 +52,7 @@ function App() {
           ],}
       ]
     },
+    {path: "/checkout", element: <CheckoutConfirmationOrder />}
   ]
   
   const element = useRoutes(routes);
